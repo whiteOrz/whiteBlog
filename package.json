@@ -1,0 +1,19 @@
+{
+  "name": "whiteblog",
+  "version": "1.0.0",
+  "description": "my blog",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/whiteOrz/whiteBlog.git"
+  },
+  "author": "whiteOrz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/whiteOrz/whiteBlog/issues"
+  },
+  "homepage": "https://github.com/whiteOrz/whiteBlog#readme"
+}
