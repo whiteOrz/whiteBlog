@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var opn = require('opn');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -45,6 +46,7 @@ app.use(function (err, req, res, next) {
 
 app.listen(8888, function () {
   console.log("server start....");
+  opn("http://localhost:8888");
 });
 
 module.exports = app;
