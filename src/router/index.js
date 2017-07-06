@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import Blog48 from "blog/Blog48"
 
 Vue.use(Router);
 
@@ -7,9 +8,7 @@ var routes = new Router({
     routes: [
         {
             path: "/a",
-            component: {
-                template: '<div>a</div>'
-            }
+            component: Blog48
         }, {
             path: "/b",
             component: {

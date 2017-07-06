@@ -1,19 +1,17 @@
 <template>
-    <div>
-        <header>
-            <ul>
-                <router-link to="/a" tag="li">
-                    <a>1111</a>
-                </router-link>
-                <router-link to="/b" tag="li">
-                    <a>2222</a>
-                </router-link>
-                <router-link to="/c" tag="li">
-                    <a>3333</a>
-                </router-link>
-            </ul>
-        </header>
-    </div>
+    <header>
+        <ul>
+            <router-link to="/a" tag="li">
+                <a>48小时阅读排行</a>
+            </router-link>
+            <router-link to="/b" tag="li">
+                <a>第二页</a>
+            </router-link>
+            <router-link to="/c" tag="li">
+                <a>第三页</a>
+            </router-link>
+        </ul>
+    </header>
 </template>
 
 <script>
@@ -31,7 +29,6 @@ header {
 header ul {
     margin: 0;
     padding: 0;
-    text-align: center;
 }
 
 header li {
@@ -39,6 +36,9 @@ header li {
     display: inline-block;
     line-height: 2.8rem;
     box-sizing: border-box;
+}
+
+.active {
     border-bottom: 2px solid #f60;
     margin-bottom: -2px;
 }

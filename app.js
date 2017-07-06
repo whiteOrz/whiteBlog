@@ -5,11 +5,21 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var opn = require('opn');
+var proxy = require('http-proxy-middleware');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+
+//proxy
+app.use("/blogApi", proxy({
+  target: 'http://wcf.open.cnblogs.com',
+  changeOrigin: true,
+  pathRewrite: {
+    '^/blogApi': '/blog'
+  }
+}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -46,7 +56,7 @@ app.use(function (err, req, res, next) {
 
 app.listen(8888, function () {
   console.log("server start....");
-  opn("http://localhost:8888");
+  //opn("http://localhost:8888");
 });
 
 module.exports = app;
