@@ -38,6 +38,9 @@ app.use("/blog", proxy({
 	// }
 }));
 
+//博客服务接口：http://wcf.open.cnblogs.com/blog/help
+//新闻服务接口：http://wcf.open.cnblogs.com/news/help
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
 	var err = new Error('Not Found');
