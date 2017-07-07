@@ -31,11 +31,11 @@ export default {
 }
 
 .container main {
-    -webkit-box-flex: 2;
+    -webkit-box-flex: 1;
     margin-right: 2rem;
 }
 
 .container aside {
-    -webkit-box-flex: 1;
+    width: 18rem;
 }
 </style>
