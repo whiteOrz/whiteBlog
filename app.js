@@ -10,7 +10,6 @@ var proxy = require('http-proxy-middleware');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var blog = require("./routes/blog");
-
 var app = express();
 
 // view engine setup
@@ -30,12 +29,20 @@ app.use('/users', users);
 app.use("/blog", blog);
 
 //proxy
-app.use("/blog", proxy({
+app.use("/blogApi", proxy({
 	target: 'http://wcf.open.cnblogs.com',
-	changeOrigin: true
-	// pathRewrite: {
-	//   '^/blog': '/blog'
-	// }
+	changeOrigin: true,
+	pathRewrite: {
+		'^/blogApi': '/blog'
+	}
+}));
+
+app.use("/newsApi", proxy({
+	target: 'http://wcf.open.cnblogs.com',
+	changeOrigin: true,
+	pathRewrite: {
+		'^/newsApi': '/news'
+	}
 }));
 
 //博客服务接口：http://wcf.open.cnblogs.com/blog/help

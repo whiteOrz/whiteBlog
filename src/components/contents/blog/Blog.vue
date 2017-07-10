@@ -4,10 +4,10 @@
         <div class="blog-info">作者：{{blog.author.name}} • {{publishTime}}</div>
         <div class="blog-summary">{{blog.summary}}...</div>
         <div class="blog-read">
-            <a class="blog-read-btn">阅读全文</a>
+            <a class="blog-read-btn" @click="viewBlog">阅读全文</a>
         </div>
         <div class="blog-footer">
-            <span>最后更新{{lastUpdateTime}}&nbsp;&nbsp;&nbsp;</span>
+            <span>最后更新于{{lastUpdateTime}}&nbsp;&nbsp;&nbsp;</span>
             <span>评论({{blog.comments}})&nbsp;&nbsp;&nbsp;</span>
             <span>阅读({{blog.views}})&nbsp;&nbsp;&nbsp;</span>
             <span>推荐({{blog.diggs}})&nbsp;&nbsp;&nbsp;</span>
@@ -50,6 +50,9 @@ export default {
             }
 
             return num;
+        },
+        viewBlog() {
+            location.href = "/blog/" + this.blog.id;
         }
     }
 }
