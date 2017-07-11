@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import BlogHomePage from "blog/BlogHomePage";
 import Blog48 from "blog/Blog48";
 import SingleBlog from "blog/SingleBlog";
+import Movie from "movie/Movie";
 
 Vue.use(Router);
 
@@ -17,6 +18,9 @@ var routes = new Router({
         }, {
             path: "/c",
             component: SingleBlog
+        }, {
+            path: "/d",
+            component: Movie
         }, {
             path: '/',
             redirect: "/a"

@@ -11,7 +11,6 @@ import Wblog from "./Blog";
 export default {
     name: "bloghomepage",
     mounted() {
-        console.log("bloghomepage");
         this.$nextTick(function () {
             axios.get("/blog/sitehome/recent").then(res => {
                 this.$store.state.homePage = res.data;

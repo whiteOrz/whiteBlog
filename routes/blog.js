@@ -1,9 +1,9 @@
 var express = require("express");
 var router = express.Router();
 var xml2js = require('xml2js');
-var http = require("http");
 var parser = new xml2js.Parser();   //xml -> json
 var request = require("request");
+var config = require("./config");
 
 router.get("/48HoursTopViewPosts", function (req, res, next) {
 	requestBlogList("/blogApi/48HoursTopViewPosts/10", res);
@@ -14,15 +14,15 @@ router.get("/sitehome/recent", function (req, res, next) {
 });
 
 router.get("/:id", function (req, res, next) {
-	request.get("http://localhost:8888/blogApi/post/body/" + req.params.id, function (err, respon, body) {
+	request.get(config.server + "/blogApi/post/body/" + req.params.id, function (err, respon, body) {
 		var json = parser.parseString(body, function (err, result) {
-			res.send(result.string);
+			res.render("blog", result);
 		});
 	});
 });
 
 function requestBlogList(url, res) {
-	request.get("http://localhost:8888" + url, function (err, respon, body) {
+	request.get(config.server + url, function (err, respon, body) {
 		var json = parser.parseString(body, function (err, result) {
 			var blogData = getBlogData(result);
 			res.send(blogData);

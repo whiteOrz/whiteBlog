@@ -10,17 +10,23 @@
 </head>
 
 <body>
-    <!--<img src="http://images2015.cnblogs.com/blog/1155933/201707/1155933-20170711191357087-375198565.png" alt="">
-    <img id="img">-->
     <div id="app"></div>
+    <img id="img" src="" alt="">
     <script>
         window.onload = function () {
-            axios.get("/blog/7152188?" + Math.random()).then(res => {
-                app.innerHTML = res.data;
-                //img.src="http://images2015.cnblogs.com/blog/1155933/201707/1155933-20170711191357087-375198565.png";
-            });
+            // axios.get("https://api.douban.com/v2/book/1220562").then(res => {
+            //     app.innerHTML = res.data;
+            // });
+            ///v2/movie/in_theaters
+        }
+
+        function test(data) {
+            console.log(data);
+            img.src = data.image;
         }
     </script>
+
+    <script src="https://api.douban.com/v2/book/1220562?callback=test"></script>
 </body>
 
 </html>

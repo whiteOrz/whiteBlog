@@ -4,7 +4,7 @@
         <div class="blog-info">作者：{{blog.author.name}} • {{publishTime}}</div>
         <div class="blog-summary">{{blog.summary}}...</div>
         <div class="blog-read">
-            <a class="blog-read-btn" @click="viewBlog">阅读全文</a>
+            <a class="blog-read-btn" :href="blogLink" target="_blank">阅读全文</a>
         </div>
         <div class="blog-footer">
             <span>最后更新于{{lastUpdateTime}}&nbsp;&nbsp;&nbsp;</span>
@@ -13,21 +13,13 @@
             <span>推荐({{blog.diggs}})&nbsp;&nbsp;&nbsp;</span>
             <a class="blog-link" :href="blog.link" target="_blank">原文链接</a>
         </div>
-        <div v-html="content"></div>
     </div>
 </template>
-
 <script>
-import axios from "axios";
 export default {
     props: {
         blog: {
             type: Object
-        }
-    },
-    data() {
-        return {
-            content: ""
         }
     },
     computed: {
@@ -38,6 +30,9 @@ export default {
         lastUpdateTime() {
             var date = new Date(this.blog.updated);
             return this.getShowTime(date);
+        },
+        blogLink() {
+            return "/blog/" + this.blog.id;
         }
     },
     methods: {
@@ -48,7 +43,6 @@ export default {
             var h = this.toTwo(date.getHours());
             var min = this.toTwo(date.getMinutes());
             var s = this.toTwo(date.getSeconds());
-
             return y + "-" + m + "-" + d + " " + h + ":" + min + ":" + s;
         },
         toTwo(num) {
@@ -56,12 +50,6 @@ export default {
                 return "0" + num;
             }
             return num;
-        },
-        viewBlog() {
-            axios.get("/blog/" + this.blog.id).then(res => {
-                this.$store.state.blogContext = res.data;
-                location.href = "/#/c";
-            });
         }
     }
 }
@@ -108,10 +96,12 @@ export default {
     transition: all 400ms;
     box-sizing: border-box;
     cursor: pointer;
+    text-decoration: none;
 }
 
 .blog-read-btn:hover {
     background: #303030;
+    text-decoration: none;
 }
 
 .blog-footer {
@@ -124,7 +114,6 @@ export default {
 .blog-link {
     float: right;
     color: #075db3;
-    text-decoration: none;
 }
 
 .blog-link:hover {

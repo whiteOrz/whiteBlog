@@ -10,6 +10,7 @@ var proxy = require('http-proxy-middleware');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var blog = require("./routes/blog");
+var movie = require("./routes/movie");
 var app = express();
 
 // view engine setup
@@ -28,6 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 app.use("/blog", blog);
+app.use("/movie", movie);
 
 //proxy
 app.use("/blogApi", proxy({
@@ -43,6 +45,14 @@ app.use("/newsApi", proxy({
 	changeOrigin: true,
 	pathRewrite: {
 		'^/newsApi': '/news'
+	}
+}));
+
+app.use("/movieApi", proxy({
+	target: 'https://api.douban.com/v2',
+	changeOrigin: true,
+	pathRewrite: {
+		'^/movieApi': '/movie'
 	}
 }));
 
