@@ -6,7 +6,8 @@ Vue.use(Vuex);
 var store = new Vuex.Store({
     state: {
         homePage: [],
-        top48: []
+        top48: [],
+        blogContext: ""
     }
 });
 

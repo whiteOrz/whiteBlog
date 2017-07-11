@@ -3,52 +3,35 @@ var router = express.Router();
 var xml2js = require('xml2js');
 var http = require("http");
 var parser = new xml2js.Parser();   //xml -> json
+var request = require("request");
 
 router.get("/48HoursTopViewPosts", function (req, res, next) {
-	sendRequest("/blogApi/48HoursTopViewPosts/10", res);
+	requestBlogList("/blogApi/48HoursTopViewPosts/10", res);
 });
 
 router.get("/sitehome/recent", function (req, res, next) {
-	sendRequest("/blogApi/sitehome/recent/10", res);
+	requestBlogList("/blogApi/sitehome/recent/10", res);
 });
 
 router.get("/:id", function (req, res, next) {
-	console.log(req.params.id);
-	sendRequest("/blogApi/post/body/" + req.params.id, res);
+	request.get("http://localhost:8888/blogApi/post/body/" + req.params.id, function (err, respon, body) {
+		var json = parser.parseString(body, function (err, result) {
+			res.send(result.string);
+		});
+	});
 });
 
-function sendRequest(url, res) {
-	http.request({
-		host: "localhost",
-		port: "8888",
-		path: url
-	}, function (respon) {
-		var receiveData = "";
-		respon.on('data', function (data) {
-			receiveData += data;
+function requestBlogList(url, res) {
+	request.get("http://localhost:8888" + url, function (err, respon, body) {
+		var json = parser.parseString(body, function (err, result) {
+			var blogData = getBlogData(result);
+			res.send(blogData);
 		});
-
-		respon.on('end', function () {
-			var json = parser.parseString(receiveData, function (err, result) {
-				if (result.feed) {
-					var blogData = getBlogData(result);
-					res.send(JSON.stringify(blogData));
-				} else {
-					res.send(result.string);
-				}
-				
-				//res.writeHead(200, { "Content-Type": "application/json;charset=utf-8" });
-			});
-		});
-	}).end();
+	});
 }
 
 function getBlogData(blogData) {
 	var feed = blogData.feed;
-	if (!feed) {
-		return blogData;
-	}
-
 	var entry = feed.entry;
 
 	var list = [];

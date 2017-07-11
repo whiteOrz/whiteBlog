@@ -13,14 +13,21 @@
             <span>推荐({{blog.diggs}})&nbsp;&nbsp;&nbsp;</span>
             <a class="blog-link" :href="blog.link" target="_blank">原文链接</a>
         </div>
+        <div v-html="content"></div>
     </div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
     props: {
         blog: {
             type: Object
+        }
+    },
+    data() {
+        return {
+            content: ""
         }
     },
     computed: {
@@ -48,11 +55,13 @@ export default {
             if (num < 10) {
                 return "0" + num;
             }
-
             return num;
         },
         viewBlog() {
-            location.href = "/blog/" + this.blog.id;
+            axios.get("/blog/" + this.blog.id).then(res => {
+                this.$store.state.blogContext = res.data;
+                location.href = "/#/c";
+            });
         }
     }
 }

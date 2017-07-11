@@ -7,9 +7,6 @@
             <router-link to="/b" tag="li">
                 <a>48小时阅读排行</a>
             </router-link>
-            <router-link to="/c" tag="li">
-                <a>第三页</a>
-            </router-link>
         </ul>
     </header>
 </template>
