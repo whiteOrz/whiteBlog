@@ -44,7 +44,7 @@ function getBlogData(blogData) {
 			updated: el.updated[0],//最后更新时间
 			author: {
 				name: el.author[0].name[0],//作者
-				homePage: el.author[0].uri[0]//作才主页
+				homePage: el.author[0].uri[0]//作者主页
 			},
 			link: el.link[0].$.href,//文章链接
 			diggs: el.diggs[0],//推荐数

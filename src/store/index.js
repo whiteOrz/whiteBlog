@@ -7,7 +7,8 @@ var store = new Vuex.Store({
     state: {
         homePage: [],
         top48: [],
-        blogContext: ""
+        blogContext: "",
+        movieList: []
     }
 });
 
