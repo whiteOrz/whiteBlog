@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vuex</title>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/vuex"></script>
+</head>
+
+<body>
+    <div id="app">
+        <p>{{ count }}</p>
+        <p>
+            <button @click="increment">+</button>
+            <button @click="decrement">-</button>
+            <button @click="clear">0</button>
+        </p>
+    </div>
+
+    <script>
+        const SOME_MUTATION = 'SOME_MUTATIONfasdfasdf';
+        const store = new Vuex.Store({
+            state: {
+                count: 0
+            },
+            mutations: {
+                increment: state => state.count++,
+                decrement: state => state.count--,
+                [SOME_MUTATION](state) {
+
+                    setTimeout(function () {
+                        state.count = 0;
+                    }, 3000)
+                }
+            },
+            actions: {
+                show({ state }) {
+                    setTimeout(function () {
+                        state.count = 20;
+                    }, 3000)
+                }
+            }
+        })
+
+        new Vue({
+            el: '#app',
+            store: store,
+            computed: {
+                count() {
+                    return this.$store.state.count
+                }
+            },
+            methods: {
+                increment() {
+                    this.$store.commit('increment');
+                    this.$store.dispatch("show");
+                },
+                decrement() {
+                    this.$store.commit('decrement')
+                },
+                clear() {
+                    this.$store.commit("SOME_MUTATIONfasdfasdf");
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
