@@ -26,6 +26,9 @@
             state: {
                 count: 0
             },
+            getters: {
+                count: state => { return state.count; }
+            },
             mutations: {
                 increment: state => state.count++,
                 decrement: state => state.count--,
@@ -33,14 +36,12 @@
 
                     setTimeout(function () {
                         state.count = 0;
-                    }, 3000)
+                    }, 3000);
                 }
             },
             actions: {
-                show({ state }) {
-                    setTimeout(function () {
-                        state.count = 20;
-                    }, 3000)
+                show({ commit }) {
+                    commit("increment");
                 }
             }
         })
@@ -50,7 +51,7 @@
             store: store,
             computed: {
                 count() {
-                    return this.$store.state.count
+                    return this.$store.getters.count
                 }
             },
             methods: {

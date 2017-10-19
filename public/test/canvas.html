@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id="c" height="250" width="400" style="width:200px;border:1px solid #ddd;"></canvas>
+    <div>保额上限：
+        <input type="text" id="input1" value="0" />
+    </div>
+    <div>自己买的：
+        <input type="text" id="input2" value="0" />
+    </div>
+    <div>别人送的：
+        <input type="text" id="input3" value="0" />
+    </div>
+    <button id="drawBtn">绘制</button>
+
+    <script>
+        var X = 200;
+        var Y = 200;
+        var R = 180;
+
+        drawBtn.onclick = function () {
+            var total = parseFloat(input1.value);
+            var my = parseFloat(input2.value);
+            var ta = parseFloat(input3.value);
+
+            c.height = c.height;
+            drawBG();
+            drawReal(total, my, ta);
+        }
+
+        function drawReal(total, mydata, tadata) {
+            var ctx = c.getContext("2d");
+            if ((mydata + tadata) == 0 || (mydata + tadata) > total) {
+                return false;
+            }
+
+            line({
+                lineWidth: 10,
+                strokeStyle: "#f60",
+                lineCap: "round",
+                start: { x: X - R, y: Y },
+                end: { x: X - R, y: Y + 5 }
+            }, ctx);
+
+            var start = Math.PI;
+            var end = Math.PI;
+
+            var percent1 = mydata / total;
+            var percent2 = tadata / total;
+            var a = percent1 / 8;
+            var count1 = 0;
+            var draw = setInterval(function () {
+                if (count1 == 8) {
+                    clearInterval(draw);
+                    drawReal2(percent2, end);
+                    return;
+                }
+
+                end = Math.PI + (a * Math.PI * (count1 + 1));
+                arc({
+                    lineWidth: 10,
+                    strokeStyle: "#f60",
+                    lineCap: "butt",
+                    center: { x: X, y: Y },
+                    radius: R,
+                    angle1: start,
+                    angle2: end,
+                }, ctx);
+                count1++;
+                console.log(11111);
+            }, 100);
+        }
+
+        function drawReal2(percent, end) {
+            var ctx = c.getContext("2d");
+            var b = percent / 5;
+            var count2 = 0;
+            var draw2 = setInterval(function () {
+                if (count2 == 5) {
+                    clearInterval(draw2);
+                    return;
+                }
+
+                var end2 = end + (b * Math.PI * (count2 + 1));
+                arc({
+                    lineWidth: 10,
+                    strokeStyle: "#99db83",
+                    lineCap: "butt",
+                    center: { x: X, y: Y },
+                    radius: R,
+                    angle1: end,
+                    angle2: end2,
+                }, ctx);
+                count2++;
+                console.log(2222);
+            }, 100);
+        }
+
+        function drawBG() {
+            var ctx = c.getContext("2d");
+
+            line({
+                lineWidth: 10,
+                strokeStyle: "#fbd6c3",
+                lineCap: "round",
+                start: { x: X - R, y: Y },
+                end: { x: X - R, y: Y + 5 }
+            }, ctx);
+
+            line({
+                lineWidth: 10,
+                strokeStyle: "#fbd6c3",
+                lineCap: "round",
+                start: { x: X + R, y: Y },
+                end: { x: X + R, y: Y + 5 }
+            }, ctx);
+
+            line({
+                lineWidth: 1,
+                strokeStyle: "#f5a623",
+                lineCap: "butt",
+                start: { x: X - R, y: Y },
+                end: { x: X - R + 15, y: Y }
+            }, ctx);
+
+            var _x = Math.sin(Math.PI / 4) * R;
+            var _x2 = Math.sin(Math.PI / 4) * (R - 15)
+
+            line({
+                lineWidth: 1,
+                strokeStyle: "#f5a623",
+                lineCap: "butt",
+                start: { x: (X - _x), y: (Y - _x) },
+                end: { x: (X - _x2), y: (Y - _x2) }
+            }, ctx);
+
+            line({
+                lineWidth: 1,
+                strokeStyle: "#f5a623",
+                lineCap: "butt",
+                start: { x: (X + _x), y: (Y - _x) },
+                end: { x: (X + _x2), y: (Y - _x2) }
+            }, ctx);
+
+            line({
+                lineWidth: 1,
+                strokeStyle: "#f5a623",
+                lineCap: "butt",
+                start: { x: X + R, y: Y },
+                end: { x: X + R - 15, y: Y }
+            }, ctx);
+
+            line({
+                lineWidth: 1,
+                strokeStyle: "#f5a623",
+                lineCap: "butt",
+                start: { x: X, y: Y - R },
+                end: { x: X, y: Y - R + 15 }
+            }, ctx);
+
+            arc({
+                lineWidth: 10,
+                strokeStyle: "#fbd6c3",
+                lineCap: "round",
+                center: { x: X, y: X },
+                radius: R,
+                angle1: Math.PI,
+                angle2: Math.PI * 2,
+            }, ctx);
+
+        }
+
+        function line(options, ctx) {
+            ctx.lineWidth = options.lineWidth;
+            ctx.lineCap = options.lineCap;
+            ctx.strokeStyle = options.strokeStyle;
+
+            ctx.beginPath();
+            ctx.moveTo(options.start.x, options.start.y);
+            ctx.lineTo(options.end.x, options.end.y);
+            ctx.stroke();
+        }
+
+        function arc(options, ctx) {
+            ctx.lineWidth = options.lineWidth;
+            ctx.lineCap = options.lineCap;
+            ctx.strokeStyle = options.strokeStyle;
+
+            var center = options.center;
+            ctx.beginPath();
+            ctx.arc(center.x, center.y, options.radius, options.angle1, options.angle2, false);
+            ctx.stroke();
+        }
+    </script>
+</body>
+
+</html>
